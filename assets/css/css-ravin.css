@@ -1,0 +1,15 @@
+#id-mesa {
+    display: none;
+}
+
+#id-mesa.active {
+    display: block;
+}
+
+#btn-mesa {
+    display: none;
+}
+
+#btn-mesa.active {
+    display: block;
+}
