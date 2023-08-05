@@ -1,11 +1,15 @@
 
+
 function pegarItens(categoria) {
     const url = "https://64b70d3ddf0839c97e16603c.mockapi.io/ravinDaniel/api/produtos";
 
     fetch(url)
       .then((dados) => { return dados.json(); })
       .then((data) => { montarHtml(data, categoria) });
+
   }
+
+  verificaNomeMesa();
 
   function montarHtml(itensMenu, categoria) {
 
@@ -55,6 +59,19 @@ function pegarItens(categoria) {
       `
     }
     produtoDiv.innerHTML = textHtml;
+
+    let titulo = document.getElementById("categoria-menu");
+    let tituloPequeno = document.getElementById("categoria-menu-pequeno");
+    let caminhoMenu = document.getElementById("menu-categoria");
+
+    if(categoria == null){
+      categoria = 'Todos os Produtos';
+    }
+    
+    titulo.innerText = transformaPrimeiraLetraMaisculo(categoria);
+    tituloPequeno.innerText = transformaPrimeiraLetraMaisculo(categoria);
+    caminhoMenu.innerText = transformaPrimeiraLetraMaisculo(categoria);
+    
   }
 
   function cadastrarMesa(){
@@ -66,4 +83,30 @@ function pegarItens(categoria) {
     labelMesa.classList.toggle('active');
     botaoMesa.classList.toggle('active');
     dadoMesa.innerText = dadoInput;
+
+    salvarMesa(dadoInput);
   }
+
+  function salvarMesa(mesa) {
+    localStorage.setItem("tableName", JSON.stringify(mesa));
+  }
+
+  function verificaNomeMesa(){
+    let nomeSalvo = localStorage.getItem("tableName");
+    if(nomeSalvo != null){
+      
+      let labelMesa = document.getElementById("id-mesa");
+      let dadoMesa = document.getElementById("mesa");
+      let botaoMesa = document.getElementById("btn-mesa");
+      labelMesa.classList.toggle('active');
+      botaoMesa.classList.toggle('active');
+      
+      dadoMesa.innerText = nomeSalvo.replaceAll('"', '');
+    }
+
+  }
+
+  function transformaPrimeiraLetraMaisculo(text) {
+    return text.substring(0, 1).toUpperCase() + text.substring(1);
+  }
+  
